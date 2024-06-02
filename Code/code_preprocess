@@ -1,0 +1,80 @@
+
+#Sirada Thoungvitayasutee
+
+
+
+#setup
+import numpy as np
+import tensorflow as tf
+
+np.random.seed(42)
+tf.random.set_seed(42)
+
+"""Load data
+
+"""
+
+from google.colab import drive
+import pandas as pd
+from sklearn.model_selection import train_test_split
+drive.mount('/content/drive', force_remount=True)
+
+data = pd.read_csv('/content/drive/My Drive/Colab Notebooks/MentalHealth/mental_health.csv')
+text = data['text']
+labels = data['label']
+
+data.head()
+
+data.info()
+
+"""Train, Test, Split"""
+
+#training data
+X_train, X_temp, y_train, y_temp = train_test_split(text, labels, test_size=0.2)
+
+#val and testing data
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5)
+
+print(len(X_train))
+print(len(y_train))
+print(len(X_test))
+print(len(y_test))
+print(len(X_val))
+print(len(y_val))
+
+"""Preprocess"""
+
+#remove stop word
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+stop_words = stopwords.words('english')
+
+#preprocess
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+from nltk.stem import PorterStemmer
+
+stemmer = PorterStemmer()
+
+def preprocess_text(text):
+  text = text.lower() #lowercase
+  words = word_tokenize(text)
+  clean_text = ' '.join(stemmer.stem(word) for word in words if word not in stop_words)
+  return clean_text
+
+example_text = 'This is an example. just for fun'
+example_text_clean = preprocess_text(example_text)
+print(example_text_clean)
+
+X_train = X_train.apply(preprocess_text)
+X_val = X_val.apply(preprocess_text)
+X_test = X_test.apply(preprocess_text)
+
+X_train.head()
+
+"""Vectorization"""
+
+#TFIDF
+
