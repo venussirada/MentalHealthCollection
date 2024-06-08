@@ -1,4 +1,5 @@
 **Reddit SuicideWatch and Mental Health Collection (SWMH) for Suicidal Ideation and Mental Disorder Detection**
+
 We collected this dataset from mental health-related subreddits on Reddit to further the study of mental disorders and suicidal ideation. We named this dataset the Reddit SuicideWatch and Mental Health Collection (SWMH). Discussions in this dataset comprise suicide-related intentions and mental disorders such as depression, anxiety, and bipolar disorder.
 
 **Data Collection**
